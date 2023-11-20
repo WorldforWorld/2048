@@ -33,15 +33,6 @@ function displayCube() {
       if (cubeArray[y][x] === 0) {
         continue;
       }
-      // if (true) {
-      //   const item = document.createElement("div");
-      //   item.classList.add("cube__item");
-      //   item.classList.add(positionClass);
-      //   item.setAttribute("item", cubeArray[i][j]);
-      //   item.textContent = cubeArray[i][j];
-      //   cube.append(item);
-      // } else {
-      // }
     }
   }
 }
