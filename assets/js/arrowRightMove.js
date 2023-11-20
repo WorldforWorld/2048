@@ -3,6 +3,7 @@ export function arrowRightMove(cubeArray) {
     sortArray(cubeArray[k]);
 
     let arrRow = cubeArray[k];
+
     for (let i = arrRow.length - 2; i >= 0; i--) {
       let currentValue = arrRow[i + 1];
       if (currentValue === arrRow[i]) {
