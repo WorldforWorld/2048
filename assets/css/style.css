@@ -1,59 +1,42 @@
+@import url(colors.css);
+@import url(positions.css);
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  font-family: sans-serif;
+  padding: 0;
+  margin: 0;
 }
-#cube {
+
+.board {
+  position: relative;
+}
+
+.platform {
   display: grid;
   grid-template-columns: 50px 50px 50px 50px;
   grid-template-rows: 50px 50px 50px 50px;
-  gap: 1px;
+  gap: 7px;
   max-width: 500px;
   background-color: azure;
   padding: 10px;
 }
-.cube__item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid gray;
+
+.cell {
+  background: gray;
+  border-radius: 5px;
 }
 
-/* colors */
-.cube__item[item="0"] {
-  background: #ffffff;
-  font-size: 0;
-}
-.cube__item[item="2"] {
-  background: #eee4da;
-}
-.cube__item[item="4"] {
-  background: #eee1c9;
-}
-.cube__item[item="8"] {
-  background: #f3b27a;
-}
-.cube__item[item="16"] {
-  background: #f69664;
-}
-.cube__item[item="32"] {
-  background: #f77c5f;
-}
-.cube__item[item="64"] {
-  background: #f75f3b;
-}
-.cube__item[item="128"] {
-  background: #edd073;
-}
-.cube__item[item="256"] {
-  background: #edcc62;
-}
-.cube__item[item="512"] {
-  background: #edc950;
-}
-.cube__item[item="1024"] {
-  background: #edc53f;
-}
-.cube__item[item="2048"] {
-  background: #edc22e;
+#cube {
+  position: absolute;
+  left: 10px;
+  top: 10px;
 }
