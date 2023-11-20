@@ -2,8 +2,7 @@ import { arrowDownMove } from "./arrowDownMove.js";
 import { ArrowLeftMove } from "./arrowLeftMove.js";
 import { arrowRightMove } from "./arrowRightMove.js";
 import { arrowUpMove } from "./arrowUpMove.js";
-const cube = document.getElementById("cube");
-
+import { placeRandomTwo } from "./placeRandomTwo.js";
 let cubeArray = [
   [0, 0, 0, 0],
   [0, 0, 2, 0],
@@ -18,18 +17,37 @@ let cubeArrayGameOver = [
 ];
 
 function displayCube() {
-  for (let i = 0; i < cubeArray.length; i++) {
-    for (let j = 0; j < cubeArray[i].length; j++) {
-      const cubeItem = document.createElement("div");
-      cubeItem.classList.add("cube__item");
-      cubeItem.setAttribute("item", cubeArray[i][j]);
-      cubeItem.textContent = cubeArray[i][j];
-      cube.append(cubeItem);
+  let cube = document.querySelector("#cube");
+  let cubeItems = cube.querySelectorAll(".cube__item");
+  let counter = 0;
+  for (let y = 0; y < cubeArray.length; y++) {
+    for (let x = 0; x < cubeArray[y].length; x++) {
+      console.log("counter: ", counter);
+      const positionClass = "position-" + y + "-" + x;
+      // TODO: переделать
+      cubeItems[counter].classList.add(positionClass);
+      cubeItems[counter].setAttribute("item", cubeArray[y][x]);
+      cubeItems[counter].textContent =
+        cubeArray[y][x] === 0 ? "" : cubeArray[y][x];
+      counter++;
+      if (cubeArray[y][x] === 0) {
+        continue;
+      }
+      // if (true) {
+      //   const item = document.createElement("div");
+      //   item.classList.add("cube__item");
+      //   item.classList.add(positionClass);
+      //   item.setAttribute("item", cubeArray[i][j]);
+      //   item.textContent = cubeArray[i][j];
+      //   cube.append(item);
+      // } else {
+      // }
     }
   }
 }
 
 displayCube();
+
 document.addEventListener("keydown", moveCube);
 
 function moveCube(e) {
@@ -52,34 +70,8 @@ function moveCube(e) {
     isKey = true;
   }
   if (isKey) {
-    cube.innerHTML = "";
-    console.log("isKey");
-
-    displayCube();
     placeRandomTwo(cubeArray);
-    cube.innerHTML = "";
     displayCube();
   }
   isKey = false;
-}
-
-// TODO: переписать, потому как при наличии оставшихся двух пустых ячеек происходит переполнение стека вызова.
-function placeRandomTwo(matrix) {
-  let emptyCells = [];
-
-  // Находим все пустые ячейки
-  for (let i = 0; i < matrix.length; i++) {
-    for (let j = 0; j < matrix[i].length; j++) {
-      if (matrix[i][j] === 0) {
-        emptyCells.push({ row: i, col: j });
-      }
-    }
-  }
-
-  // Если есть пустые ячейки, выбираем случайную и заменяем на 2
-  if (emptyCells.length > 0) {
-    let randomIndex = Math.floor(Math.random() * emptyCells.length);
-    let randomCell = emptyCells[randomIndex];
-    matrix[randomCell.row][randomCell.col] = 2;
-  }
 }
