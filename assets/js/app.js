@@ -1,68 +1,249 @@
-import { arrowDownMove } from "./arrowDownMove.js";
-import { ArrowLeftMove } from "./arrowLeftMove.js";
-import { arrowRightMove } from "./arrowRightMove.js";
-import { arrowUpMove } from "./arrowUpMove.js";
-import { placeRandomTwo } from "./placeRandomTwo.js";
-let cubeArray = [
-  [0, 0, 0, 0],
-  [0, 0, 2, 0],
-  [0, 0, 0, 0],
-  [2, 0, 0, 0],
-];
-let cubeArrayGameOver = [
-  [2, 64, 4, 2],
-  [16, 8, 256, 32],
-  [4, 32, 64, 16],
-  [2, 4, 8, 2],
-];
+import { placeRandom } from "./placeRandom.js";
+import { setValueTile } from "./setValueTile.js";
+
+let arr = Array.from({ length: 4 }, () => Array(4).fill(0));
+
+displayCube();
+displayCube();
+window.addEventListener("keydown", handleInput);
+
+function handleInput(e) {
+  const tile = document.querySelectorAll(".tile");
+  switch (e.code) {
+    case "ArrowRight" || "KeyD":
+      rightMove(tile);
+      displayCube();
+      break;
+    case "ArrowLeft" || "KeyA":
+      leftMove(tile);
+      displayCube();
+      break;
+    case "ArrowDown" || "KeyS":
+      downMove(tile);
+      displayCube();
+      break;
+    case "ArrowUp" || "KeyW":
+      upMove(tile);
+      displayCube();
+      break;
+
+    default:
+      break;
+  }
+}
 
 function displayCube() {
-  let cube = document.querySelector("#cube");
-  let cubeItems = cube.querySelectorAll(".cube__item");
-  let counter = 0;
-  for (let y = 0; y < cubeArray.length; y++) {
-    for (let x = 0; x < cubeArray[y].length; x++) {
-      console.log("counter: ", counter);
-      const positionClass = "position-" + y + "-" + x;
-      // TODO: переделать
-      cubeItems[counter].classList.add(positionClass);
-      cubeItems[counter].setAttribute("item", cubeArray[y][x]);
-      cubeItems[counter].textContent =
-        cubeArray[y][x] === 0 ? "" : cubeArray[y][x];
-      counter++;
-      if (cubeArray[y][x] === 0) {
+  const cube = document.querySelector("#board");
+  cube.append(createTile());
+  const tile = cube.querySelectorAll(".tile");
+  arr = Array.from({ length: 4 }, () => Array(4).fill(0));
+  for (let i = 0; i < tile.length; i++) {
+    const x = +tile[i].getAttribute("x");
+    const y = +tile[i].getAttribute("y");
+    arr[y][x] = 1;
+  }
+}
+
+function createTile() {
+  const value = Math.random() > 0.5 ? 2 : 4;
+  const tile = document.createElement("div");
+  tile.classList.add("tile");
+  setValueTile(tile, value);
+  const randomNums = placeRandom(arr);
+  arr[randomNums[0]][randomNums[1]] = 1;
+  tile.style.setProperty("--y", randomNums[0]);
+  tile.style.setProperty("--x", randomNums[1]);
+  tile.setAttribute("y", randomNums[0]);
+  tile.setAttribute("x", randomNums[1]);
+  console.log("arr: ", arr);
+  return tile;
+}
+
+// uptMove
+function upMove(tile) {
+  upMoveTile(tile);
+  upMergeTile(tile);
+}
+
+function upMoveTile(tile) {
+  for (let i = 0; i < tile.length; i++) {
+    const y = +tile[i].getAttribute("y");
+    const x = +tile[i].getAttribute("x");
+    for (let j = +y - 1; j >= 0; j--) {
+      const isEmpty1 = arr[j][x] === 0;
+
+      if (isEmpty1) {
+        tile[i].style.setProperty("--y", j);
+        tile[i].setAttribute("y", j);
+        arr[j + 1][x] = 0;
+        arr[j][x] = 1;
         continue;
+      } else {
+        break;
       }
     }
   }
 }
 
-displayCube();
+function upMergeTile(tile) {
+  for (let i = 0; i < tile.length; i++) {
+    const y = +tile[i].getAttribute("y");
+    const x = +tile[i].getAttribute("x");
+    for (let j = +y - 1; j >= 0; j--) {
+      const isEmpty1 = arr[y][j] === 0;
 
-document.addEventListener("keydown", moveCube);
+      const afterTile = document.querySelector(`.tile[x="${x}"][y="${j}"]`);
 
-function moveCube(e) {
-  const key = e.code;
-  let isKey = false;
-  if (key == "ArrowRight" || key == "KeyD") {
-    arrowRightMove(cubeArray);
-    isKey = true;
+      upMoveTile(tile);
+      if (+afterTile?.textContent === +tile[i].textContent && !isEmpty1) {
+        setValueTile(afterTile, +afterTile.textContent * 2);
+        tile[i].remove();
+        arr[j + 1][x] = 0;
+        continue;
+      } else {
+        break;
+      }
+    }
   }
-  if (key == "ArrowLeft" || key == "KeyA") {
-    ArrowLeftMove(cubeArray);
-    isKey = true;
+}
+// leftMove
+function leftMove(tile) {
+  leftMoveTile(tile);
+  leftMergeTile(tile);
+}
+
+function leftMoveTile(tile) {
+  for (let i = 0; i < tile.length; i++) {
+    const y = +tile[i].getAttribute("y");
+    const x = +tile[i].getAttribute("x");
+    for (let j = +x - 1; j >= 0; j--) {
+      const isEmpty1 = arr[y][j] === 0;
+
+      if (isEmpty1) {
+        tile[i].style.setProperty("--x", j);
+        tile[i].setAttribute("x", j);
+        arr[y][j + 1] = 0;
+        arr[y][j] = 1;
+        continue;
+      } else {
+        break;
+      }
+    }
   }
-  if (key == "ArrowDown" || key == "KeyS") {
-    arrowDownMove(cubeArray);
-    isKey = true;
+}
+
+function leftMergeTile(tile) {
+  for (let i = 0; i < tile.length; i++) {
+    const y = +tile[i].getAttribute("y");
+    const x = +tile[i].getAttribute("x");
+    for (let j = +x - 1; j >= 0; j--) {
+      const isEmpty1 = arr[y][j] === 0;
+
+      const afterTile = document.querySelector(`.tile[x="${j}"][y="${y}"]`);
+
+      leftMoveTile(tile);
+      if (+afterTile?.textContent === +tile[i].textContent && !isEmpty1) {
+        setValueTile(afterTile, +afterTile.textContent * 2);
+        tile[i].remove();
+        arr[y][j + 1] = 0;
+        continue;
+      } else {
+        break;
+      }
+    }
   }
-  if (key == "ArrowUp" || key == "KeyW") {
-    arrowUpMove(cubeArray);
-    isKey = true;
+}
+// rightMove
+function rightMove(tile) {
+  rightMoveTile(tile);
+  rightMergeTile(tile);
+}
+
+function rightMoveTile(tile) {
+  for (let i = 0; i < tile.length; i++) {
+    const y = +tile[i].getAttribute("y");
+    const x = +tile[i].getAttribute("x");
+    for (let j = +x + 1; j < 4; j++) {
+      const isEmpty1 = arr[y][j] === 0;
+
+      if (isEmpty1) {
+        tile[i].style.setProperty("--x", j);
+        tile[i].setAttribute("x", j);
+        arr[y][j - 1] = 0;
+        arr[y][j] = 1;
+        continue;
+      } else {
+        break;
+      }
+    }
   }
-  if (isKey) {
-    placeRandomTwo(cubeArray);
-    displayCube();
+}
+
+function rightMergeTile(tile) {
+  for (let i = 0; i < tile.length; i++) {
+    const y = +tile[i].getAttribute("y");
+    const x = +tile[i].getAttribute("x");
+    for (let j = +x + 1; j < 4; j++) {
+      const isEmpty1 = arr[y][j] === 0;
+
+      const afterTile = document.querySelector(`.tile[x="${j}"][y="${y}"]`);
+
+      rightMoveTile(tile);
+      if (+afterTile?.textContent === +tile[i].textContent && !isEmpty1) {
+        setValueTile(afterTile, +afterTile.textContent * 2);
+        tile[i].remove();
+        arr[y][j - 1] = 0;
+        continue;
+      } else {
+        break;
+      }
+    }
   }
-  isKey = false;
+}
+// rightMove
+function downMove(tile) {
+  downMoveTile(tile);
+  downMergeTile(tile);
+}
+
+function downMoveTile(tile) {
+  for (let i = 0; i < tile.length; i++) {
+    const y = +tile[i].getAttribute("y");
+    const x = +tile[i].getAttribute("x");
+    for (let j = +y + 1; j < 4; j++) {
+      const isEmpty1 = arr[j][x] === 0;
+
+      if (isEmpty1) {
+        tile[i].style.setProperty("--y", j);
+        tile[i].setAttribute("y", j);
+        arr[j - 1][x] = 0;
+        arr[j][x] = 1;
+        continue;
+      } else {
+        break;
+      }
+    }
+  }
+}
+
+function downMergeTile(tile) {
+  for (let i = 0; i < tile.length; i++) {
+    const y = +tile[i].getAttribute("y");
+    const x = +tile[i].getAttribute("x");
+    for (let j = +y + 1; j < 4; j++) {
+      const isEmpty1 = arr[j][x] === 0;
+
+      const afterTile = document.querySelector(`.tile[x="${x}"][y="${j}"]`);
+
+      downMoveTile(tile);
+      if (+afterTile?.textContent === +tile[i].textContent && !isEmpty1) {
+        setValueTile(afterTile, +afterTile.textContent * 2);
+        tile[i].remove();
+        arr[j - 1][x] = 0;
+        continue;
+      } else {
+        break;
+      }
+    }
+  }
 }
