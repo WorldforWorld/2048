@@ -1,12 +1,61 @@
 export function placeRandom(arr) {
-  const ITEM = 4;
-  const x = Math.floor(Math.random() * ITEM);
-  const y = Math.floor(Math.random() * ITEM);
-  const nums = [y, x];
+  const empty = [];
 
-  if (arr[y][x] === 0) {
-    return nums;
+  arr.forEach((row, rowIndex) => {
+    row.forEach((cell, colIndex) => {
+      if (cell === 0) {
+        empty.push([rowIndex, colIndex]);
+      }
+    });
+  });
+
+  if (empty.length > 0) {
+    const [row, col] = empty[Math.floor(Math.random() * empty.length)];
+    return [row, col];
   } else {
-    return placeRandom(arr);
+    console.log("mergeX(arr): ", mergeX(arr));
+    console.log("mergeY(arr): ", mergeY(arr));
+    if (!mergeY(arr) && !mergeX(arr)) {
+      console.log("Игра закончена");
+      console.dir(arr);
+      alert("Гамовер");
+    }
   }
+}
+
+function mergeY(arr) {
+  let isMerge = false;
+  for (let x = 0; x < arr[0].length; x++) {
+    let nonZeroCount = 0;
+    for (let y = arr.length - 1; y >= 0; y--) {
+      if (arr[y][x] !== 0) {
+        const item = arr[y][x];
+        const newY = arr.length - nonZeroCount - 2;
+        if (newY < 0) continue;
+        const afterItem = arr[newY][x];
+        if (item === afterItem) {
+          isMerge = true;
+          break;
+        }
+        nonZeroCount++;
+      }
+    }
+  }
+  return isMerge;
+}
+function mergeX(arr) {
+  let isMerge = false;
+  for (let y = 0; y < arr.length; y++) {
+    for (let x = 0; x < arr[y].length; x++) {
+      if (arr[y][x] !== 0) {
+        const item = arr[y][x];
+        const afterItem = arr[y][x + 1];
+        if (item === afterItem) {
+          isMerge = true;
+          break;
+        }
+      }
+    }
+  }
+  return isMerge;
 }
