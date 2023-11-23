@@ -1,0 +1,31 @@
+.game-over {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vmin;
+  padding: 2vmin;
+  background-color: #bbada0;
+  border-radius: 1vmin;
+  font-size: 5vmin;
+  transform: scale(0);
+}
+.game-over.active {
+  transform: scale(1);
+}
+.button {
+  background-color: #444444;
+  border-radius: 1vmin;
+  padding: 1vmin;
+  cursor: pointer;
+  border-width: 0;
+  color: #ffffff;
+  font-size: 5vmin;
+  transition: background-color ease 0.1s;
+}
+.button:hover {
+  background-color: #766f6f;
+}
+.button:active {
+  background-color: #2f2828;
+}
