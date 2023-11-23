@@ -13,11 +13,7 @@ export function placeRandom(arr) {
     const [row, col] = empty[Math.floor(Math.random() * empty.length)];
     return [row, col];
   } else {
-    console.log("mergeX(arr): ", mergeX(arr));
-    console.log("mergeY(arr): ", mergeY(arr));
     if (!mergeY(arr) && !mergeX(arr)) {
-      console.log("Игра закончена");
-      console.dir(arr);
       alert("Гамовер");
     }
   }
