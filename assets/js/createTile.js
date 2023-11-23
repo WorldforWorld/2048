@@ -14,5 +14,7 @@ export function createTile(arr) {
     tile.setAttribute("y", randomNums[0]);
     tile.setAttribute("x", randomNums[1]);
     return tile;
+  } else {
+    return "";
   }
 }
