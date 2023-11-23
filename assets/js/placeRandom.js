@@ -16,20 +16,24 @@ export function placeRandom(arr) {
     return [row, col];
   } else {
     if (!mergeY(arr) && !mergeX(arr)) {
-      const gameOver = document.querySelector(".game-over");
-      const button = gameOver.querySelector(".try-again");
-      gameOver.classList.add("active");
-      button.addEventListener("click", () => {
-        gameOver.classList.remove("active");
-        const tiles = document.querySelectorAll(".tile");
-        tiles.forEach(tile => tile.remove());
-        arr = Array.from({ length: 4 }, () => Array(4).fill(0));
-        const cube = document.querySelector("#board");
-        cube.append(createTile(arr));
-        cube.append(createTile(arr));
-      });
+      displayGameOver(arr);
     }
   }
+}
+
+function displayGameOver(arr) {
+  const gameOver = document.querySelector(".game-over");
+  const button = gameOver.querySelector(".try-again");
+  gameOver.classList.add("active");
+  button.addEventListener("click", () => {
+    gameOver.classList.remove("active");
+    const tiles = document.querySelectorAll(".tile");
+    tiles.forEach(tile => tile.remove());
+    arr = Array.from({ length: 4 }, () => Array(4).fill(0));
+    const cube = document.querySelector("#board");
+    cube.append(createTile(arr));
+    cube.append(createTile(arr));
+  });
 }
 
 function mergeY(arr) {
