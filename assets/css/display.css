@@ -1,0 +1,44 @@
+.display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2vmin;
+  width: 66vmin;
+  margin-bottom: 2vmin;
+}
+.title {
+  font-size: 15vmin;
+  margin: 0;
+}
+.state-game {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2vmin;
+}
+.best-score,
+.score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 1vmin;
+  padding: 1vmin;
+  font-size: 2vmin;
+  background-color: #444444;
+  text-transform: uppercase;
+  color: #ffffff;
+  letter-spacing: 3px;
+}
+.best-score .count,
+.score .count {
+  margin-top: 1vmin;
+}
+.new-game {
+  grid-column: 1/-1;
+  font-size: 3vmin;
+  border-radius: 1vmin;
+  cursor: pointer;
+  transition: background-color ease-in-out 0.2s;
+}
+.new-game:hover {
+  background-color: bisque;
+}
