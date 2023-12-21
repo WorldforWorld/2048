@@ -11,15 +11,16 @@ displayCube();
 window.addEventListener("keydown", handleInput);
 
 function handleInput(e) {
+  let isMove = false;
   switch (e.code) {
     case "ArrowRight" || "KeyD":
-      moveAndMergeRight(arr);
+      isMove = moveAndMergeRight(arr);
       break;
     case "ArrowLeft" || "KeyA":
-      moveAndMergeLeft(arr);
+      isMove = moveAndMergeLeft(arr);
       break;
     case "ArrowDown" || "KeyS":
-      moveAndMergeDown(arr);
+      isMove = moveAndMergeDown(arr);
       break;
     case "ArrowUp" || "KeyW":
       moveAndMergeUp(arr);
@@ -28,7 +29,9 @@ function handleInput(e) {
     default:
       break;
   }
-  displayCube();
+  if (isMove) {
+    displayCube();
+  }
 }
 
 function displayCube() {
@@ -36,17 +39,15 @@ function displayCube() {
   cube.append(createTile(arr));
 }
 
+// touch
 document.addEventListener("touchstart", handleTouchStart, false);
 document.addEventListener("touchmove", handleTouchMove, false);
 
-var xDown = null;
-var yDown = null;
+let xDown = null;
+let yDown = null;
 
 function getTouches(evt) {
-  return (
-    evt.touches || // browser API
-    evt.originalEvent.touches
-  ); // jQuery
+  return evt.touches || evt.originalEvent.touches;
 }
 
 function handleTouchStart(evt) {
@@ -60,29 +61,28 @@ function handleTouchMove(evt) {
     return;
   }
 
-  var xUp = evt.touches[0].clientX;
-  var yUp = evt.touches[0].clientY;
+  const xUp = evt.touches[0].clientX;
+  const yUp = evt.touches[0].clientY;
 
-  var xDiff = xDown - xUp;
-  var yDiff = yDown - yUp;
-
+  const xDiff = xDown - xUp;
+  const yDiff = yDown - yUp;
+  let isMove = false;
   if (Math.abs(xDiff) > Math.abs(yDiff)) {
     /*most significant*/
     if (xDiff < 0) {
-      moveAndMergeRight(arr);
-      displayCube();
+      isMove = moveAndMergeRight(arr);
     } else {
-      moveAndMergeLeft(arr);
-      displayCube();
+      isMove = moveAndMergeLeft(arr);
     }
   } else {
     if (yDiff < 0) {
-      moveAndMergeDown(arr);
-      displayCube();
+      isMove = moveAndMergeDown(arr);
     } else {
-      moveAndMergeUp(arr);
-      displayCube();
+      isMove = moveAndMergeUp(arr);
     }
+  }
+  if (isMove) {
+    displayCube();
   }
   /* reset values */
   xDown = null;
