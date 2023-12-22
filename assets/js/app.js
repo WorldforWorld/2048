@@ -3,7 +3,7 @@ import { moveAndMergeDown } from "./moveAndMergeDown.js";
 import { moveAndMergeLeft } from "./moveAndMergeLeft.js";
 import { moveAndMergeRight } from "./moveAndMergeRight.js";
 import { moveAndMergeUp } from "./moveAndMergeUp.js";
-
+import { placeRandom } from "./placeRandom.js";
 let arr = Array.from({ length: 4 }, () => Array(4).fill(0));
 
 displayCube();
@@ -11,26 +11,35 @@ displayCube();
 window.addEventListener("keydown", handleInput);
 
 function handleInput(e) {
+  const checkBool = check => check.isMerge || check.isMove;
   let isMove = false;
+  let isMerge = false;
   switch (e.code) {
     case "ArrowRight" || "KeyD":
-      isMove = moveAndMergeRight(arr);
+      isMove = checkBool(moveAndMergeRight(arr));
+      isMerge = moveAndMergeRight(arr).isMerge;
       break;
     case "ArrowLeft" || "KeyA":
-      isMove = moveAndMergeLeft(arr);
+      isMove = checkBool(moveAndMergeLeft(arr));
+      isMerge = moveAndMergeLeft(arr).isMerge;
       break;
     case "ArrowDown" || "KeyS":
-      isMove = moveAndMergeDown(arr);
+      isMove = checkBool(moveAndMergeDown(arr));
+      isMerge = moveAndMergeDown(arr).isMerge;
       break;
     case "ArrowUp" || "KeyW":
-      moveAndMergeUp(arr);
-      break;
-
-    default:
+      isMove = checkBool(moveAndMergeUp(arr));
+      isMerge = moveAndMergeUp(arr).isMerge;
       break;
   }
   if (isMove) {
     displayCube();
+  }
+
+  const isEmpty = arr.some(row => row.includes(0));
+
+  if (!isMerge && !isEmpty) {
+    placeRandom(arr);
   }
 }
 
