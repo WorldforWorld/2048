@@ -1,10 +1,11 @@
 import { setValueTile } from "./setValueTile.js";
+import { updateScore } from "./updateScore.js";
 
 export function moveAndMergeRight(arr) {
   const isMove = shiftRight(arr);
   const isMerge = mergeRight(arr);
   shiftRight(arr);
-  return isMerge || isMove;
+  return { isMerge, isMove };
 }
 
 function shiftRight(arr) {
@@ -49,6 +50,7 @@ function mergeRight(arr) {
           document.querySelector(`.tile[y="${y}"][x="${x - 1}"]`).remove();
           x--;
           isMerge = true;
+          updateScore(sum);
         }
       }
     }

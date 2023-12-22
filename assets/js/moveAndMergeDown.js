@@ -1,10 +1,11 @@
 import { setValueTile } from "./setValueTile.js";
+import { updateScore } from "./updateScore.js";
 
 export function moveAndMergeDown(arr) {
   const isMove = shiftDown(arr);
   const isMerge = mergeDown(arr);
   shiftDown(arr);
-  return isMerge || isMove;
+  return { isMerge, isMove };
 }
 
 function shiftDown(arr) {
@@ -51,6 +52,7 @@ function mergeDown(arr) {
           setValueTile(tile, sum);
           document.querySelector(`.tile[y="${newY}"][x="${x}"]`).remove();
           isMerge = true;
+          updateScore(sum);
           continue;
         }
         nonZeroCount++;
