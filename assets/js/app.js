@@ -11,25 +11,20 @@ displayCube();
 window.addEventListener("keydown", handleInput);
 
 function handleInput(e) {
-  const checkBool = check => check.isMerge || check.isMove;
-  let isMove = false;
   let isMerge = false;
+  let isMove = false;
   switch (e.code) {
     case "ArrowRight" || "KeyD":
-      isMove = checkBool(moveAndMergeRight(arr));
-      isMerge = moveAndMergeRight(arr).isMerge;
+      [isMerge, isMove] = moveAndMergeRight(arr);
       break;
     case "ArrowLeft" || "KeyA":
-      isMove = checkBool(moveAndMergeLeft(arr));
-      isMerge = moveAndMergeLeft(arr).isMerge;
+      [isMerge, isMove] = moveAndMergeLeft(arr);
       break;
     case "ArrowDown" || "KeyS":
-      isMove = checkBool(moveAndMergeDown(arr));
-      isMerge = moveAndMergeDown(arr).isMerge;
+      [isMerge, isMove] = moveAndMergeDown(arr);
       break;
     case "ArrowUp" || "KeyW":
-      isMove = checkBool(moveAndMergeUp(arr));
-      isMerge = moveAndMergeUp(arr).isMerge;
+      [isMerge, isMove] = moveAndMergeUp(arr);
       break;
   }
   if (isMove) {
@@ -75,24 +70,33 @@ function handleTouchMove(evt) {
 
   const xDiff = xDown - xUp;
   const yDiff = yDown - yUp;
+
+  let isMerge = false;
   let isMove = false;
   if (Math.abs(xDiff) > Math.abs(yDiff)) {
     /*most significant*/
     if (xDiff < 0) {
-      isMove = moveAndMergeRight(arr);
+      [isMerge, isMove] = moveAndMergeRight(arr);
     } else {
-      isMove = moveAndMergeLeft(arr);
+      [isMerge, isMove] = moveAndMergeLeft(arr);
     }
   } else {
     if (yDiff < 0) {
-      isMove = moveAndMergeDown(arr);
+      [isMerge, isMove] = moveAndMergeDown(arr);
     } else {
-      isMove = moveAndMergeUp(arr);
+      [isMerge, isMove] = moveAndMergeUp(arr);
     }
   }
   if (isMove) {
     displayCube();
   }
+
+  const isEmpty = arr.some(row => row.includes(0));
+
+  if (!isMerge && !isEmpty) {
+    placeRandom(arr);
+  }
+
   /* reset values */
   xDown = null;
   yDown = null;
