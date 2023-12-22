@@ -1,11 +1,12 @@
 import { setValueTile } from "./setValueTile.js";
+import { transforAnimationForMergeElement } from "./transforAnimationForMergeElement.js";
 import { updateScore } from "./updateScore.js";
 
 export function moveAndMergeDown(arr) {
   const isMove = shiftDown(arr);
   const isMerge = mergeDown(arr);
   shiftDown(arr);
-  return { isMerge, isMove };
+  return [isMerge, isMove];
 }
 
 function shiftDown(arr) {
@@ -49,6 +50,7 @@ function mergeDown(arr) {
           arr[y][x] = sum;
           arr[newY][x] = 0;
           const tile = document.querySelector(`.tile[y="${y}"][x="${x}"]`);
+          transforAnimationForMergeElement(tile);
           setValueTile(tile, sum);
           document.querySelector(`.tile[y="${newY}"][x="${x}"]`).remove();
           isMerge = true;
