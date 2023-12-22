@@ -27,5 +27,5 @@
   background-color: #766f6f;
 }
 .button:active {
-  background-color: #2f2828;
+  transform: scale(1.01);
 }
