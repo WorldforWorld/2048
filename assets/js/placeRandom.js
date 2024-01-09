@@ -1,8 +1,7 @@
 import { createTile } from "./createTile.js";
-
+import { updateScore } from "./updateScore.js";
 export function placeRandom(arr) {
   const empty = [];
-
   arr.forEach((row, rowIndex) => {
     row.forEach((cell, colIndex) => {
       if (cell === 0) {
@@ -33,6 +32,7 @@ function displayGameOver(arr) {
     const cube = document.querySelector("#board");
     cube.append(createTile(arr));
     cube.append(createTile(arr));
+    updateScore(0, true);
   });
 }
 
