@@ -1,9 +1,11 @@
 import { createTile } from "./createTile.js";
+import { displayGameOver } from "./displayGameOver.js";
 import { moveAndMergeDown } from "./moveAndMergeDown.js";
 import { moveAndMergeLeft } from "./moveAndMergeLeft.js";
 import { moveAndMergeRight } from "./moveAndMergeRight.js";
 import { moveAndMergeUp } from "./moveAndMergeUp.js";
 import { placeRandom } from "./placeRandom.js";
+import { resetGame } from "./resetGame.js";
 import { updateScore } from "./updateScore.js";
 let arr = Array.from({ length: 4 }, () => Array(4).fill(0));
 
@@ -12,7 +14,12 @@ displayCube();
 
 updateScore(0, true);
 window.addEventListener("keydown", handleInput);
-
+document.querySelector(".new-game").addEventListener("click", () => {
+  if (confirm("Всё слетит! Оно вам надо?")) {
+    arr = Array.from({ length: 4 }, () => Array(4).fill(0));
+    resetGame(arr);
+  }
+});
 function handleInput(e) {
   let isMerge = false;
   let isMove = false;
@@ -38,6 +45,12 @@ function handleInput(e) {
 
   if (!isMerge && !isEmpty) {
     placeRandom(arr);
+  }
+
+  if (placeRandom(arr) === true) {
+    updateScore(0, true);
+    arr = Array.from({ length: 4 }, () => Array(4).fill(0));
+    displayGameOver(arr);
   }
 }
 
