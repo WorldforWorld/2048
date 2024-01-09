@@ -4,10 +4,13 @@ import { moveAndMergeLeft } from "./moveAndMergeLeft.js";
 import { moveAndMergeRight } from "./moveAndMergeRight.js";
 import { moveAndMergeUp } from "./moveAndMergeUp.js";
 import { placeRandom } from "./placeRandom.js";
+import { updateScore } from "./updateScore.js";
 let arr = Array.from({ length: 4 }, () => Array(4).fill(0));
 
 displayCube();
 displayCube();
+
+updateScore(0, true);
 window.addEventListener("keydown", handleInput);
 
 function handleInput(e) {
