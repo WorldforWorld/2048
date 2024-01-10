@@ -10,7 +10,8 @@ export function placeRandom(arr) {
 
   if (empty.length > 0) {
     const [row, col] = empty[Math.floor(Math.random() * empty.length)];
-    return [row, col];
+    const value = Math.random() > 0.75 ? 4 : 2;
+    return [row, col, value];
   } else {
     if (!mergeY(arr) && !mergeX(arr)) {
       return true;
