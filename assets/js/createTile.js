@@ -2,17 +2,17 @@ import { placeRandom } from "./placeRandom.js";
 import { setValueTile } from "./setValueTile.js";
 
 export function createTile(arr) {
-  const value = Math.random() > 0.75 ? 4 : 2;
   const tile = document.createElement("div");
+  const [row, col, value] = placeRandom(arr);
   tile.classList.add("tile");
   setValueTile(tile, value);
-  const randomNums = placeRandom(arr);
-  if (randomNums !== undefined) {
-    arr[randomNums[0]][randomNums[1]] = value;
-    tile.style.setProperty("--y", randomNums[0]);
-    tile.style.setProperty("--x", randomNums[1]);
-    tile.setAttribute("y", randomNums[0]);
-    tile.setAttribute("x", randomNums[1]);
+
+  if (row !== undefined && col !== undefined && value !== undefined) {
+    arr[[row, col][0]][[row, col][1]] = value;
+    tile.style.setProperty("--y", row);
+    tile.style.setProperty("--x", col);
+    tile.setAttribute("y", row);
+    tile.setAttribute("x", col);
     return tile;
   } else {
     return "";
