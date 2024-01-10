@@ -7,7 +7,6 @@ export function resetGame(arr, gameOver) {
   gameOver?.classList.remove("active");
 
   tiles.forEach(tile => tile.remove());
-
   cube.append(createTile(arr));
   cube.append(createTile(arr));
 }
