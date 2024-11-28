@@ -1,52 +1,74 @@
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/img/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/img/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="assets/img/favicon-16x16.png"
+    />
+    <link rel="manifest" href="site.webmanifest" />
 
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
-  <link rel="manifest" href="site.webmanifest">
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script type="module" src="assets/js/app.js"></script>
 
-  <link rel="stylesheet" href="assets/css/style.css">
-  <script type="module" src="assets/js/app.js"></script>
-  <title>2048</title>
-</head>
+    <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+    <script>
+      vkBridge.send("VKWebAppInit", {});
+    </script>
 
-<body>
-  <div class="display">
-    <h1 class="title">2048</h1>
-    <div class="state-game">
-      <div class="score">счёт <div class="count">0</div>
+    <title>2048</title>
+  </head>
+
+  <body>
+    <div class="display">
+      <h1 class="title">2048</h1>
+      <div class="state-game">
+        <div class="score">
+          счёт
+          <div class="count">0</div>
+        </div>
+        <div class="best-score">
+          лучший
+          <div class="count"></div>
+        </div>
+        <button class="new-game">Новая игра</button>
       </div>
-      <div class="best-score">лучший<div class="count"></div>
-      </div>
-      <button class="new-game">Новая игра</button>
     </div>
-  </div>
-  <div id="board">
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-  </div>
-  <div class="game-over">
-    <span>Гамовер</span>
-    <button class="button try-again">Тру эган</button>
-  </div>
-</body>
-
+    <div id="board">
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+    <div class="game-over">
+      <span>Гамовер</span>
+      <button class="button try-again">Тру эган</button>
+    </div>
+  </body>
 </html>
