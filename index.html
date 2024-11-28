@@ -1,52 +1,54 @@
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script type="module" src="assets/js/app.js"></script>
+    <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+    <script>
+      vkBridge.send("VKWebAppInit", {});
+    </script>
+    <title>2048</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <script type="module" src="assets/js/app.js"></script>
-  <title>2048</title>
-</head>
-
-<body>
-  <div class="board">
-    <div class="platform">
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
+  <body>
+    <div class="board">
+      <div class="platform">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+      </div>
+      <div id="cube">
+        <div class="cube__item"></div>
+        <div class="cube__item"></div>
+        <div class="cube__item"></div>
+        <div class="cube__item"></div>
+        <div class="cube__item"></div>
+        <div class="cube__item"></div>
+        <div class="cube__item"></div>
+        <div class="cube__item"></div>
+        <div class="cube__item"></div>
+        <div class="cube__item"></div>
+        <div class="cube__item"></div>
+        <div class="cube__item"></div>
+        <div class="cube__item"></div>
+        <div class="cube__item"></div>
+        <div class="cube__item"></div>
+        <div class="cube__item"></div>
+      </div>
     </div>
-    <div id="cube">
-      <div class="cube__item"></div>
-      <div class="cube__item"></div>
-      <div class="cube__item"></div>
-      <div class="cube__item"></div>
-      <div class="cube__item"></div>
-      <div class="cube__item"></div>
-      <div class="cube__item"></div>
-      <div class="cube__item"></div>
-      <div class="cube__item"></div>
-      <div class="cube__item"></div>
-      <div class="cube__item"></div>
-      <div class="cube__item"></div>
-      <div class="cube__item"></div>
-      <div class="cube__item"></div>
-      <div class="cube__item"></div>
-      <div class="cube__item"></div>
-    </div>
-  </div>
-</body>
-
+  </body>
 </html>
