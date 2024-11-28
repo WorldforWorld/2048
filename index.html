@@ -27,7 +27,21 @@
 
     <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
     <script>
-      vkBridge.send("VKWebAppInit", {});
+      vkBridge
+        .send("VKWebAppInit")
+        .then((data) => {
+          if (data.result) {
+            // Приложение инициализировано
+            console.log(data.result);
+          } else {
+            console.log(data.result);
+            // Ошибка
+          }
+        })
+        .catch((error) => {
+          // Ошибка
+          console.log(error);
+        });
     </script>
 
     <title>2048</title>
